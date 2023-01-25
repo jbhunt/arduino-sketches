@@ -3,9 +3,9 @@ byte handshake = 'h';
 byte pulse     = 'p';
 byte input     = 'z';
 byte reset     = 'r';
-int  outputPin =  12;
+int  outputPin =  8;
 bool handshakeMade = false;
-unsigned long pulseOnTimeMs = 500;
+unsigned long pulseOnTimeMs = 5;
 
 // Variables
 

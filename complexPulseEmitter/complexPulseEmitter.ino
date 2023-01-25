@@ -1,12 +1,12 @@
 byte          sensorState         = 0;
 byte          lastSensorState     = 0;
-uint16_t      lightThresh         = 15; // lights on = 10; lights off = 10
-uint16_t      darkThresh          = 100; // lights on = 30; lights off = 150
-const byte    sensorLine          = 2;  // 10
+uint16_t      lightThresh         = 170; // lights on = 10; lights off = 10
+uint16_t      darkThresh          = 30;  // lights on = 30; lights off = 150
+const byte    sensorLine          = 10;  // 10
 const byte    signalLine          = 12;  // 12
 unsigned long currentTime         = 0;
 unsigned long lastTransitionTime  = 0;
-unsigned long samplingDuration    = 20 * 1000; // Interval for checking mean (in us)
+unsigned long samplingDuration    = 5 * 1000; // Interval for checking mean (in us)
 unsigned long samplingStopTime    = 0;
 unsigned long sensorValue         = 0;
 unsigned long ipiSum              = 0;
