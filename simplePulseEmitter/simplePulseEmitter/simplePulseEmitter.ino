@@ -1,13 +1,10 @@
 // Constants
-byte connectCommand = 'c';
-byte signalCommand = 's';
-byte releaseCommand = 'r';
-byte message;
-int  outputPin =  12;
-bool handshakeMade = false;
-
-// Variables
-unsigned long pulseOnTimeMs = 500;
+byte          connectCommand = 'c';
+byte          signalCommand  = 's';
+byte          releaseCommand = 'r';
+byte          message             ; 
+int           outputPin      =  12;
+unsigned long pulseOnTimeMs  = 500;
 
 //
 void setup() {
@@ -26,29 +23,19 @@ void loop() {
   else {
     message = SerialUSB.read();
   }
-  
-  // Wait for handshake
-  if (handshakeMade == false) {
-    if (message == connectCommand) {
-      SerialUSB.write(connectCommand);
-      handshakeMade = true;
-      return;
-    }
+
+  // Send byte back to Python
+  if (message == connectCommand) {
+    SerialUSB.write(connectCommand);
+    return;
   }
 
-  // Wait for command to signal pulse
-  else {
-    if (message == signalCommand) {
-      // pulseOnTimeMs = SerialUSB.readString().toInt();
-      digitalWrite(outputPin, HIGH);
-      digitalWrite(LED_BUILTIN, HIGH);
-      delay(pulseOnTimeMs);      
-      digitalWrite(outputPin, LOW);
-      digitalWrite(LED_BUILTIN, LOW);
-    }
-    if (message == releaseCommand) {
-      handshakeMade = false;
-    }
+  // Emit a pulse
+  if (message == signalCommand) {
+    digitalWrite(outputPin, HIGH);
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(pulseOnTimeMs);      
+    digitalWrite(outputPin, LOW);
+    digitalWrite(LED_BUILTIN, LOW); 
   }
-  
 }
