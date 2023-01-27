@@ -14,7 +14,9 @@ unsigned long ipiCount            = 0;
 float         ipiAverage          = 0.0;
 unsigned long lastCheckTime       = 0;
 bool          printInterval       = true;
-
+int           ipiAverageMin       = 0;
+int           ipiAverageMax       = 200;
+int           ipiAverageScaled    = 0;
 
 void setup() {
   pinMode(sensorLine, INPUT);
@@ -34,9 +36,13 @@ void loop() {
     
     // Compute average pulse interval
     ipiAverage = (float) ipiSum / (float) ipiCount;
+    ipiAverageScaled = map(round(ipiAverage), ipiAverageMin, ipiAverageMax, 0, 255);
+    
     if (printInterval) {
-      SerialUSB.println(ipiAverage);
+      SerialUSB.println(ipiAverageScaled);
     }
+
+    // TODO: Write the scaled value to a PWM pin
 
     //
     if (ipiAverage < lightThresh && digitalRead(signalLine) == LOW) {
